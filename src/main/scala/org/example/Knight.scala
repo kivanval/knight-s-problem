@@ -1,3 +1,4 @@
+package org.example
 object Knight:
 
   private val steps = List(-2, -1, 1, 2).combinations(2).toSeq

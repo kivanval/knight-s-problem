@@ -1,7 +1,6 @@
-class Board private(
-                     val field: List[List[Option[Int]]],
-                     val m: Int, val n: Int,
-                     val stepNumber: Int):
+package org.example
+
+class Board private(field: List[List[Option[Int]]], m: Int, n: Int, stepNumber: Int):
   private def inBoard(position: Position): Option[Position] =
     if position.m < m && position.n < n
     then Option(position)
