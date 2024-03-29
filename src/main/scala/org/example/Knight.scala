@@ -6,14 +6,10 @@ import cps.monads.{*, given}
 object Knight:
 
   private val steps: Seq[Seq[Int]] = Seq(
-    Seq(2, 1),
-    Seq(2, -1),
-    Seq(-2, 1),
-    Seq(-2, -1),
-    Seq(1, 2),
-    Seq(1, -2),
-    Seq(-1, 2),
-    Seq(-1, -2)
+    Seq(2, 1), Seq(2, -1),
+    Seq(-2, 1), Seq(-2, -1),
+    Seq(1, 2), Seq(1, -2),
+    Seq(-1, 2), Seq(-1, -2)
   )
 
   def steps(position: Position, board: Board): Seq[(Position, Board)] = reify[Seq] {
