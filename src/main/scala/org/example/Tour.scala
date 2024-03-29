@@ -9,7 +9,7 @@ object Tour:
 
   def find(m: Int, n: Int): View[Board] =
     for
-      position <- startPosition(m, n).view
+      position <- startPositions(m, n).view
       board <- Board(m, n).updateIn(position).view
       tour <- tours(position, board)
     yield tour
@@ -22,6 +22,6 @@ object Tour:
     
 
   // LMAO
-  private def startPosition(m: Int, n: Int): Seq[Position] = reify[Seq] {
+  private def startPositions(m: Int, n: Int): Seq[Position] = reify[Seq] {
     Position(reflect(Seq.range(0, m)), reflect(Seq.range(0, n)))
   }
