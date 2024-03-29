@@ -11,13 +11,13 @@ object Tour:
     for
       position <- startPosition(m, n).view
       board <- Board(m, n).updateIn(position).view
-      tour <- inner(position, board)
+      tour <- runTour(position, board)
     yield tour
 
-  private def inner(position: Position, board: Board): View[Board] =
+  private def runTour(position: Position, board: Board): View[Board] =
     if (board.isFilled) Seq(board).view
     else Knight.steps(position, board).view.collect {
-      case (position, board) => inner(position, board)
+      case (position, board) => runTour(position, board)
     }.flatten
     
 
