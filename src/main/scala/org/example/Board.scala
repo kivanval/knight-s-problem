@@ -1,28 +1,28 @@
 package org.example
 
-class Board private(field: List[List[Option[Int]]], m: Int, n: Int, stepNumber: Int):
-  private def inBoard(position: Position): Option[Position] =
-    if position.m < m && position.n < n
-    then Option(position)
-    else None
+class Board private[example](val field: Seq[Seq[Option[Int]]], m: Int, n: Int, stepNumber: Int):
+  private def inBoard(position: Position): Boolean =
+    position.m < m && position.n < n && position.m >= 0 && position.n >= 0
 
   private def freeSquare(position: Position): Boolean =
-    (for
-      Position(m, n) <- inBoard(position)
-      stepNumber <- field(m)(n)
-    yield stepNumber).isEmpty
+    inBoard(position) && field(position.m)(position.n).isEmpty
 
-  def updatePosition(position: Position): Option[Board] =
+  def updateIn(position: Position): Option[Board] =
     if freeSquare(position)
     then Some(new Board(
-      field.updated(position.m, field(position.m).updated(n, Some(stepNumber))),
+      field.updated(position.m,
+        field(position.m)
+          .updated(position.n,
+            Some(stepNumber))),
       m, n,
       stepNumber + 1
     ))
     else None
 
-object Board:
-  def apply(m: Int, n: Int): Board = new Board(List.fill(m, n)(None), m, n, 1)
+  val isFilled: Boolean = field.flatten.forall(_.isDefined)
 
-  def apply(m: Int): Board = new Board(List.fill(m, m)(None), m, m, 1)
+object Board:
+  def apply(m: Int, n: Int): Board = new Board(Seq.fill(m, n)(None), m, n, 0)
+
+  def apply(m: Int): Board = new Board(Seq.fill(m, m)(None), m, m, 0)
 
